@@ -244,6 +244,10 @@ a { color: inherit; text-decoration: none; }
   padding: 10px 12px; background: var(--accent-soft);
   border-radius: var(--r-sm); font-size: 12px; line-height: 1.5; color: var(--accent-deep);
 }
+.card__note-text {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; flex: 1;
+}
 .card__cta {
   display: flex; align-items: center; justify-content: space-between;
   margin-top: auto; padding-top: 4px;
@@ -552,6 +556,18 @@ function storeImgHTML(p, tone, iconPaths, size) {
   return fallbackImg(p.name, p.category, tone, sid, iconPaths);
 }
 
+// format reward value — always show as %
+function fmtReward(val) {
+  if (!val || val === '—') return '—';
+  const s = String(val).trim();
+  // already has % → keep as-is
+  if (s.includes('%')) return s;
+  // decimal like 0.11 → 11%
+  const n = parseFloat(s);
+  if (!isNaN(n) && n < 1) return (n * 100).toFixed(0) + '%';
+  return s;
+}
+
 function cardHTML(p, i) {
   const tone    = CATEGORY_TONE[p.category] || '#B8704B';
   const isOnline = p.store_type === '網路';
@@ -568,18 +584,18 @@ function cardHTML(p, i) {
     <div class="card__rewards">
       <div class="reward reward--cashback">
         <div class="reward__label">現金回饋 / IBV</div>
-        <div class="reward__value"><strong>${escHtml(p.cashback || '—')}</strong></div>
+        <div class="reward__value"><strong>${fmtReward(p.cashback)}</strong></div>
       </div>
       <div class="reward reward--ibv">
         <div class="reward__label">IBV</div>
-        <div class="reward__value"><strong>${escHtml(p.ibv || '—')}</strong></div>
+        <div class="reward__value"><strong>${fmtReward(p.ibv)}</strong></div>
       </div>
     </div>` : '';
 
   const noteSection = p.note ? `
     <div class="card__note">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span>${escHtml(p.note)}</span>
+      <span class="card__note-text">${escHtml(p.note)}</span>
     </div>` : '';
 
   return `
@@ -676,12 +692,12 @@ function openModal(p) {
         <div class="modal__rewards">
           <div class="modal-reward">
             <div class="modal-reward__label">IBV</div>
-            <div class="modal-reward__value">${escHtml(p.ibv || '—')}</div>
+            <div class="modal-reward__value">${fmtReward(p.ibv)}</div>
             <div class="modal-reward__hint">點數回饋</div>
           </div>
           <div class="modal-reward modal-reward--accent">
             <div class="modal-reward__label">現金回饋</div>
-            <div class="modal-reward__value">${escHtml(p.cashback || '—')}</div>
+            <div class="modal-reward__value">${fmtReward(p.cashback)}</div>
             <div class="modal-reward__hint">最高比率</div>
           </div>
           <div class="modal-reward">
