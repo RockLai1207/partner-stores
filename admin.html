@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>後台管理 · 精選夥伴商店</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1917;
+    --surface2: #232220;
+    --border: #2e2c29;
+    --text: #e8e4dc;
+    --muted: #7a7570;
+    --earth: #c4935a;
+    --gold: #c9a84c;
+    --rust: #c4622d;
+    --sage: #7a9b6e;
+    --danger: #e05252;
+    --cream: #f5f0e8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', 'Noto Sans TC', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ===== LOGIN ===== */
+  #loginScreen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .login-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+
+  .login-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+
+  .login-box p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+    text-align: left;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 11px 14px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--earth);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .form-group select option { background: var(--surface2); }
+
+  .error-msg {
+    color: var(--danger);
+    font-size: 0.8rem;
+    margin-top: 8px;
+    display: none;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 22px;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--earth);
+    color: white;
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+    padding: 13px;
+    font-size: 0.95rem;
+  }
+
+  .btn-primary:hover { background: #d4a06a; }
+
+  .btn-sm {
+    padding: 7px 14px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+  }
+
+  .btn-ghost:hover { border-color: var(--earth); color: var(--earth); }
+
+  .btn-danger { background: rgba(224,82,82,0.15); color: var(--danger); border: 1.5px solid rgba(224,82,82,0.3); }
+  .btn-danger:hover { background: rgba(224,82,82,0.25); }
+
+  .btn-success { background: rgba(122,155,110,0.15); color: var(--sage); border: 1.5px solid rgba(122,155,110,0.3); }
+  .btn-success:hover { background: rgba(122,155,110,0.25); }
+
+  /* ===== APP LAYOUT ===== */
+  #appScreen { display: none; }
+
+  .app-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .app-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .app-header h1::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sage);
+  }
+
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+
+  .logout-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: color 0.2s;
+  }
+
+  .logout-btn:hover { color: var(--danger); }
+
+  /* ===== MAIN CONTENT ===== */
+  .app-main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--cream);
+  }
+
+  /* ===== PARTNER TABLE ===== */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  td {
+    padding: 14px 18px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(46,44,41,0.5);
+    vertical-align: middle;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .partner-logo-cell {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+  }
+
+  .partner-logo-cell img { width: 100%; height: 100%; object-fit: cover; }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  .badge-active { background: rgba(122,155,110,0.2); color: var(--sage); }
+  .badge-inactive { background: rgba(122,122,122,0.2); color: var(--muted); }
+
+  .actions-cell { display: flex; gap: 6px; }
+
+  /* ===== FORM PANEL ===== */
+  .form-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+
+  .form-panel h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--cream);
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-grid .full-width { grid-column: 1 / -1; }
+
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 14px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .toggle {
+    width: 36px;
+    height: 20px;
+    background: var(--border);
+    border-radius: 100px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+    border: none;
+    flex-shrink: 0;
+  }
+
+  .toggle::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: white;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.2s;
+  }
+
+  .toggle.on { background: var(--sage); }
+  .toggle.on::after { transform: translateX(16px); }
+
+  .toggle-label { font-size: 0.85rem; color: var(--muted); }
+
+  /* Toast */
+  #toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 0.85rem;
+    color: var(--text);
+    z-index: 999;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    max-width: 280px;
+  }
+
+  #toast.show { transform: translateY(0); opacity: 1; }
+  #toast.success { border-color: var(--sage); }
+  #toast.error { border-color: var(--danger); }
+
+  /* Loading overlay */
+  #loadingOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,14,12,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 2px solid rgba(196,147,90,0.2);
+    border-top-color: var(--earth);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Empty */
+  .empty-row td {
+    text-align: center;
+    padding: 48px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    .app-main { padding: 20px 16px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-grid .full-width { grid-column: 1; }
+    table { font-size: 0.78rem; }
+    th, td { padding: 10px 12px; }
+    .app-header { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== 登入畫面 ===== -->
+<div id="loginScreen">
+  <div class="login-box">
+    <h2>後台管理</h2>
+    <p>請輸入管理員帳號密碼</p>
+    <div class="form-group">
+      <label>帳號</label>
+      <input type="text" id="loginUser" placeholder="admin">
+    </div>
+    <div class="form-group">
+      <label>密碼</label>
+      <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <p class="error-msg" id="loginError">帳號或密碼錯誤</p>
+    <button class="btn btn-primary" onclick="doLogin()">登入</button>
+  </div>
+</div>
+
+<!-- ===== 主畫面 ===== -->
+<div id="appScreen">
+  <header class="app-header">
+    <h1>精選夥伴商店 · 後台</h1>
+    <div class="header-actions">
+      <a href="index.html" target="_blank" class="btn btn-ghost btn-sm">👁 檢視前台</a>
+      <button class="logout-btn" onclick="logout()">登出</button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- 新增/編輯表單 -->
+    <div class="form-panel" id="formPanel">
+      <h3 id="formTitle">➕ 新增夥伴商店</h3>
+      <input type="hidden" id="editId">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>商店名稱 *</label>
+          <input type="text" id="fName" placeholder="例：小山咖啡">
+        </div>
+        <div class="form-group">
+          <label>類別</label>
+          <input type="text" id="fCategory" placeholder="例：餐飲、服飾、生活">
+        </div>
+        <div class="form-group full-width">
+          <label>Logo 圖片網址</label>
+          <input type="text" id="fLogoUrl" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label>地址</label>
+          <input type="text" id="fAddress" placeholder="台北市...">
+        </div>
+        <div class="form-group">
+          <label>地圖連結</label>
+          <input type="text" id="fMapUrl" placeholder="Google Maps 網址">
+        </div>
+        <div class="form-group">
+          <label>電話</label>
+          <input type="text" id="fPhone" placeholder="02-xxxx-xxxx">
+        </div>
+        <div class="form-group">
+          <label>LINE ID</label>
+          <input type="text" id="fLineId" placeholder="@xxxxxxxx">
+        </div>
+        <div class="form-group full-width">
+          <label>網站連結</label>
+          <input type="text" id="fWebsite" placeholder="https://...">
+        </div>
+        <div class="form-group full-width">
+          <label>優惠說明 / 合作內容</label>
+          <textarea id="fPromo" placeholder="例：憑通關密語享 9 折優惠..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>顯示狀態</label>
+          <div class="toggle-wrap">
+            <button class="toggle on" id="fActiveToggle" onclick="toggleActive()"></button>
+            <span class="toggle-label" id="fActiveLabel">顯示中</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>排序（數字越小越前面）</label>
+          <input type="number" id="fSortOrder" placeholder="0" value="0">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="resetForm()">清除</button>
+        <button class="btn btn-primary" style="width:auto;padding:11px 28px" onclick="savePartner()">💾 儲存</button>
+      </div>
+    </div>
+
+    <!-- 列表 -->
+    <div class="section-header">
+      <div class="section-title">夥伴商店列表</div>
+      <span style="font-size:0.82rem;color:var(--muted)" id="partnerCountLabel"></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Logo</th>
+            <th>名稱</th>
+            <th>類別</th>
+            <th>電話</th>
+            <th>狀態</th>
+            <th>排序</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="partnerTable">
+          <tr class="empty-row"><td colspan="7">載入中...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- Loading -->
+<div id="loadingOverlay"><div class="spinner"></div></div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+  // ===== 設定區 =====
+  // 請把你的 Google Apps Script 網址貼在這裡
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzPWdr1vPE5PV1ETG6mzlhHgDIB2eqBfUwgpc9KHGRrkdOSjAm7FEloktdbrvRgVbgP/exec';
+
+  // 管理員帳密（上線前請改掉）
+  const ADMIN_USER = 'superadmin';
+  const ADMIN_PASS = 'Aa111111';
+
+  // ===== 狀態 =====
+  let partners = [];
+  let isActiveState = true;
+
+  // ===== 登入 =====
+  function doLogin() {
+    const u = document.getElementById('loginUser').value.trim();
+    const p = document.getElementById('loginPass').value;
+    if (u === ADMIN_USER && p === ADMIN_PASS) {
+      sessionStorage.setItem('admin_auth', '1');
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('appScreen').style.display = 'block';
+      loadPartners();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+    }
+  }
+
+  function logout() {
+    sessionStorage.removeItem('admin_auth');
+    location.reload();
+  }
+
+  // 檢查是否已登入
+  if (sessionStorage.getItem('admin_auth') === '1') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appScreen').style.display = 'block';
+    loadPartners();
+  }
+
+  // ===== 讀取資料 =====
+  async function loadPartners() {
+    showLoading(true);
+    try {
+      const res = await fetch(`${SCRIPT_URL}?action=list`);
+      partners = await res.json();
+      renderTable();
+    } catch (e) {
+      toast('載入失敗，請確認 Apps Script 設定', 'error');
+    }
+    showLoading(false);
+  }
+
+  function renderTable() {
+    const tbody = document.getElementById('partnerTable');
+    document.getElementById('partnerCountLabel').textContent = `共 ${partners.length} 間`;
+
+    if (partners.length === 0) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="7">還沒有夥伴商店，從上方新增吧！</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = partners.map(p => `
+      <tr>
+        <td>
+          <div class="partner-logo-cell">
+            ${p.logo_url ? `<img src="${p.logo_url}" alt="" onerror="this.parentElement.textContent='🏪'">` : '🏪'}
+          </div>
+        </td>
+        <td><strong>${p.name}</strong></td>
+        <td>${p.category || '—'}</td>
+        <td>${p.phone || '—'}</td>
+        <td><span class="badge ${p.is_active === 'TRUE' || p.is_active === true ? 'badge-active' : 'badge-inactive'}">
+          ${p.is_active === 'TRUE' || p.is_active === true ? '顯示中' : '隱藏'}
+        </span></td>
+        <td>${p.sort_order ?? '—'}</td>
+        <td>
+          <div class="actions-cell">
+            <button class="btn btn-ghost btn-sm" onclick="editPartner('${p.id}')">✏️ 編輯</button>
+            <button class="btn btn-danger btn-sm" onclick="deletePartner('${p.id}', '${p.name}')">🗑</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // ===== Toggle =====
+  function toggleActive() {
+    isActiveState = !isActiveState;
+    const btn = document.getElementById('fActiveToggle');
+    const label = document.getElementById('fActiveLabel');
+    btn.classList.toggle('on', isActiveState);
+    label.textContent = isActiveState ? '顯示中' : '隱藏';
+  }
+
+  // ===== 重置表單 =====
+  function resetForm() {
+    document.getElementById('editId').value = '';
+    document.getElementById('formTitle').textContent = '➕ 新增夥伴商店';
+    ['fName','fCategory','fLogoUrl','fAddress','fMapUrl','fPhone','fLineId','fWebsite','fPromo'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    document.getElementById('fSortOrder').value = '0';
+    isActiveState = true;
+    document.getElementById('fActiveToggle').classList.add('on');
+    document.getElementById('fActiveLabel').textContent = '顯示中';
+  }
+
+  // ===== 編輯 =====
+  function editPartner(id) {
+    const p = partners.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('editId').value = p.id;
+    document.getElementById('formTitle').textContent = '✏️ 編輯：' + p.name;
+    document.getElementById('fName').value = p.name || '';
+    document.getElementById('fCategory').value = p.category || '';
+    document.getElementById('fLogoUrl').value = p.logo_url || '';
+    document.getElementById('fAddress').value = p.address || '';
+    document.getElementById('fMapUrl').value = p.map_url || '';
+    document.getElementById('fPhone').value = p.phone || '';
+    document.getElementById('fLineId').value = p.line_id || '';
+    document.getElementById('fWebsite').value = p.website_url || '';
+    document.getElementById('fPromo').value = p.promo_title || '';
+    document.getElementById('fSortOrder').value = p.sort_order || 0;
+    isActiveState = p.is_active === 'TRUE' || p.is_active === true;
+    document.getElementById('fActiveToggle').classList.toggle('on', isActiveState);
+    document.getElementById('fActiveLabel').textContent = isActiveState ? '顯示中' : '隱藏';
+    document.querySelector('.form-panel').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ===== 儲存 =====
+  async function savePartner() {
+    const name = document.getElementById('fName').value.trim();
+    if (!name) { toast('請填寫商店名稱', 'error'); return; }
+
+    const id = document.getElementById('editId').value;
+    const data = {
+      action: id ? 'update' : 'create',
+      id,
+      name,
+      category: document.getElementById('fCategory').value.trim(),
+      logo_url: document.getElementById('fLogoUrl').value.trim(),
+      address: document.getElementById('fAddress').value.trim(),
+      map_url: document.getElementById('fMapUrl').value.trim(),
+      phone: document.getElementById('fPhone').value.trim(),
+      line_id: document.getElementById('fLineId').value.trim(),
+      website_url: document.getElementById('fWebsite').value.trim(),
+      promo_title: document.getElementById('fPromo').value.trim(),
+      sort_order: document.getElementById('fSortOrder').value || 0,
+      is_active: isActiveState,
+    };
+
+    showLoading(true);
+    try {
+      const res = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      if (result.success) {
+        toast(id ? '更新成功！' : '新增成功！', 'success');
+        resetForm();
+        await loadPartners();
+      } else {
+        toast('儲存失敗：' + result.error, 'error');
+      }
+    } catch (e) {
+      toast('儲存失敗，請確認網路或 Script 設定', 'error');
+    }
+    showLoading(false);
+  }
+
+  // ===== 刪除 =====
+  async function deletePartner(id, name) {
+    if (!confirm(`確定要刪除「${name}」嗎？此操作無法復原。`)) return;
+    showLoading(true);
+    try {
+      const res = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'delete', id })
+      });
+      const result = await res.json();
+      if (result.success) {
+        toast(`已刪除「${name}」`, 'success');
+        await loadPartners();
+      } else {
+        toast('刪除失敗', 'error');
+      }
+    } catch (e) {
+      toast('刪除失敗', 'error');
+    }
+    showLoading(false);
+  }
+
+  // ===== UI helpers =====
+  function showLoading(show) {
+    document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+  }
+
+  function toast(msg, type = 'success') {
+    const el = document.getElementById('toast');
+    el.textContent = (type === 'success' ? '✓ ' : '✕ ') + msg;
+    el.className = `show ${type}`;
+    setTimeout(() => { el.className = ''; }, 3000);
+  }
+</script>
+</body>
+</html>
