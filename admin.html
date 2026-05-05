@@ -31,7 +31,7 @@
     min-height: 100vh;
   }
 
-  /* ===== LOGIN ===== */
+  /* LOGIN */
   #loginScreen {
     display: flex;
     align-items: center;
@@ -58,25 +58,17 @@
     margin-bottom: 6px;
   }
 
-  .login-box p {
-    font-size: 0.82rem;
-    color: var(--muted);
-    margin-bottom: 32px;
-    font-weight: 300;
-  }
+  .login-box p { font-size: 0.82rem; color: var(--muted); margin-bottom: 32px; font-weight: 300; }
 
-  .form-group {
-    margin-bottom: 16px;
-    text-align: left;
-  }
+  .form-group { margin-bottom: 14px; text-align: left; }
 
   .form-group label {
     display: block;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 8px;
+    margin-bottom: 7px;
     font-weight: 500;
   }
 
@@ -84,45 +76,34 @@
   .form-group select,
   .form-group textarea {
     width: 100%;
-    padding: 11px 14px;
+    padding: 10px 13px;
     background: var(--surface2);
     border: 1.5px solid var(--border);
-    border-radius: 10px;
+    border-radius: 9px;
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
+    font-family: 'DM Sans', 'Noto Sans TC', sans-serif;
+    font-size: 0.88rem;
     outline: none;
     transition: border-color 0.2s;
   }
 
   .form-group input:focus,
   .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--earth);
-  }
+  .form-group textarea:focus { border-color: var(--earth); }
 
-  .form-group textarea {
-    resize: vertical;
-    min-height: 80px;
-  }
-
+  .form-group textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
   .form-group select option { background: var(--surface2); }
 
-  .error-msg {
-    color: var(--danger);
-    font-size: 0.8rem;
-    margin-top: 8px;
-    display: none;
-  }
+  .error-msg { color: var(--danger); font-size: 0.8rem; margin-top: 8px; display: none; }
 
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    padding: 11px 22px;
-    border-radius: 10px;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: 9px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
+    font-size: 0.87rem;
     font-weight: 500;
     cursor: pointer;
     border: none;
@@ -130,46 +111,23 @@
     text-decoration: none;
   }
 
-  .btn-primary {
-    background: var(--earth);
-    color: white;
-    width: 100%;
-    justify-content: center;
-    margin-top: 8px;
-    padding: 13px;
-    font-size: 0.95rem;
-  }
-
+  .btn-primary { background: var(--earth); color: white; justify-content: center; }
   .btn-primary:hover { background: #d4a06a; }
-
-  .btn-sm {
-    padding: 7px 14px;
-    font-size: 0.8rem;
-    border-radius: 8px;
-  }
-
-  .btn-ghost {
-    background: transparent;
-    border: 1.5px solid var(--border);
-    color: var(--muted);
-  }
-
+  .btn-login { width: 100%; padding: 13px; font-size: 0.95rem; margin-top: 8px; }
+  .btn-sm { padding: 6px 13px; font-size: 0.78rem; border-radius: 7px; }
+  .btn-ghost { background: transparent; border: 1.5px solid var(--border); color: var(--muted); }
   .btn-ghost:hover { border-color: var(--earth); color: var(--earth); }
+  .btn-danger { background: rgba(224,82,82,0.12); color: var(--danger); border: 1.5px solid rgba(224,82,82,0.25); }
+  .btn-danger:hover { background: rgba(224,82,82,0.22); }
 
-  .btn-danger { background: rgba(224,82,82,0.15); color: var(--danger); border: 1.5px solid rgba(224,82,82,0.3); }
-  .btn-danger:hover { background: rgba(224,82,82,0.25); }
-
-  .btn-success { background: rgba(122,155,110,0.15); color: var(--sage); border: 1.5px solid rgba(122,155,110,0.3); }
-  .btn-success:hover { background: rgba(122,155,110,0.25); }
-
-  /* ===== APP LAYOUT ===== */
+  /* APP */
   #appScreen { display: none; }
 
   .app-header {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     padding: 0 32px;
-    height: 60px;
+    height: 58px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -180,7 +138,7 @@
 
   .app-header h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
+    font-size: 1.08rem;
     color: var(--cream);
     display: flex;
     align-items: center;
@@ -190,19 +148,18 @@
   .app-header h1::before {
     content: '';
     display: inline-block;
-    width: 8px;
-    height: 8px;
+    width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--sage);
   }
 
-  .header-actions { display: flex; align-items: center; gap: 12px; }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
 
   .logout-btn {
     background: none;
     border: none;
     color: var(--muted);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     cursor: pointer;
     font-family: 'DM Sans', sans-serif;
     transition: color 0.2s;
@@ -210,44 +167,36 @@
 
   .logout-btn:hover { color: var(--danger); }
 
-  /* ===== MAIN CONTENT ===== */
-  .app-main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 32px 24px;
-  }
+  .app-main { max-width: 1100px; margin: 0 auto; padding: 28px 24px; }
 
   .section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
   .section-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: var(--cream);
   }
 
-  /* ===== PARTNER TABLE ===== */
+  /* Table */
   .table-wrap {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 14px;
     overflow: hidden;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+  table { width: 100%; border-collapse: collapse; }
 
   th {
-    padding: 14px 18px;
+    padding: 13px 16px;
     text-align: left;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--muted);
@@ -257,91 +206,81 @@
   }
 
   td {
-    padding: 14px 18px;
-    font-size: 0.85rem;
+    padding: 13px 16px;
+    font-size: 0.84rem;
     border-bottom: 1px solid rgba(46,44,41,0.5);
     vertical-align: middle;
+    max-width: 200px;
   }
+
+  td.wrap-cell { white-space: normal; word-break: break-word; }
 
   tr:last-child td { border-bottom: none; }
-
   tr:hover td { background: rgba(255,255,255,0.02); }
-
-  .partner-logo-cell {
-    width: 44px;
-    height: 44px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--surface2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-  }
-
-  .partner-logo-cell img { width: 100%; height: 100%; object-fit: cover; }
 
   .badge {
     display: inline-block;
-    padding: 3px 10px;
+    padding: 3px 9px;
     border-radius: 100px;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 500;
   }
 
   .badge-active { background: rgba(122,155,110,0.2); color: var(--sage); }
-  .badge-inactive { background: rgba(122,122,122,0.2); color: var(--muted); }
+  .badge-inactive { background: rgba(122,122,122,0.15); color: var(--muted); }
+  .badge-online { background: rgba(100,160,100,0.15); color: #8bb88b; }
+  .badge-physical { background: rgba(196,147,90,0.15); color: var(--earth); }
 
   .actions-cell { display: flex; gap: 6px; }
 
-  /* ===== FORM PANEL ===== */
+  /* Form Panel */
   .form-panel {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px;
+    border-radius: 14px;
+    padding: 26px;
     margin-bottom: 32px;
   }
 
   .form-panel h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     color: var(--cream);
-    margin-bottom: 24px;
-    padding-bottom: 16px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
     border-bottom: 1px solid var(--border);
   }
 
   .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 14px;
   }
 
-  .form-grid .full-width { grid-column: 1 / -1; }
+  .form-grid .full { grid-column: 1 / -1; }
 
   .form-actions {
     display: flex;
     gap: 10px;
     justify-content: flex-end;
-    margin-top: 20px;
-    padding-top: 20px;
+    margin-top: 18px;
+    padding-top: 18px;
     border-top: 1px solid var(--border);
   }
 
+  /* Toggle */
   .toggle-wrap {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 11px 14px;
+    padding: 10px 13px;
     background: var(--surface2);
     border: 1.5px solid var(--border);
-    border-radius: 10px;
+    border-radius: 9px;
   }
 
   .toggle {
-    width: 36px;
-    height: 20px;
+    width: 34px; height: 19px;
     background: var(--border);
     border-radius: 100px;
     cursor: pointer;
@@ -354,43 +293,38 @@
   .toggle::after {
     content: '';
     position: absolute;
-    width: 14px;
-    height: 14px;
+    width: 13px; height: 13px;
     background: white;
     border-radius: 50%;
-    top: 3px;
-    left: 3px;
+    top: 3px; left: 3px;
     transition: transform 0.2s;
   }
 
   .toggle.on { background: var(--sage); }
-  .toggle.on::after { transform: translateX(16px); }
-
-  .toggle-label { font-size: 0.85rem; color: var(--muted); }
+  .toggle.on::after { transform: translateX(15px); }
+  .toggle-label { font-size: 0.83rem; color: var(--muted); }
 
   /* Toast */
   #toast {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
+    bottom: 24px; right: 24px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 14px 20px;
-    font-size: 0.85rem;
+    padding: 13px 18px;
+    font-size: 0.84rem;
     color: var(--text);
     z-index: 999;
     transform: translateY(80px);
     opacity: 0;
     transition: all 0.3s ease;
-    max-width: 280px;
+    max-width: 260px;
   }
 
   #toast.show { transform: translateY(0); opacity: 1; }
   #toast.success { border-color: var(--sage); }
   #toast.error { border-color: var(--danger); }
 
-  /* Loading overlay */
   #loadingOverlay {
     position: fixed;
     inset: 0;
@@ -402,8 +336,7 @@
   }
 
   .spinner {
-    width: 36px;
-    height: 36px;
+    width: 34px; height: 34px;
     border: 2px solid rgba(196,147,90,0.2);
     border-top-color: var(--earth);
     border-radius: 50%;
@@ -412,27 +345,21 @@
 
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Empty */
-  .empty-row td {
-    text-align: center;
-    padding: 48px;
-    color: var(--muted);
-    font-style: italic;
-  }
+  .empty-row td { text-align: center; padding: 44px; color: var(--muted); font-style: italic; }
 
   @media (max-width: 768px) {
-    .app-main { padding: 20px 16px; }
+    .app-main { padding: 16px; }
     .form-grid { grid-template-columns: 1fr; }
-    .form-grid .full-width { grid-column: 1; }
-    table { font-size: 0.78rem; }
-    th, td { padding: 10px 12px; }
-    .app-header { padding: 0 16px; }
+    .form-grid .full { grid-column: 1; }
+    table { font-size: 0.76rem; }
+    th, td { padding: 9px 10px; }
+    .app-header { padding: 0 14px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ===== 登入畫面 ===== -->
+<!-- 登入 -->
 <div id="loginScreen">
   <div class="login-box">
     <h2>後台管理</h2>
@@ -446,11 +373,11 @@
       <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <p class="error-msg" id="loginError">帳號或密碼錯誤</p>
-    <button class="btn btn-primary" onclick="doLogin()">登入</button>
+    <button class="btn btn-primary btn-login" onclick="doLogin()">登入</button>
   </div>
 </div>
 
-<!-- ===== 主畫面 ===== -->
+<!-- 主畫面 -->
 <div id="appScreen">
   <header class="app-header">
     <h1>精選夥伴商店 · 後台</h1>
@@ -461,47 +388,73 @@
   </header>
 
   <main class="app-main">
-    <!-- 新增/編輯表單 -->
-    <div class="form-panel" id="formPanel">
+
+    <!-- 表單 -->
+    <div class="form-panel">
       <h3 id="formTitle">➕ 新增夥伴商店</h3>
       <input type="hidden" id="editId">
       <div class="form-grid">
+
         <div class="form-group">
           <label>商店名稱 *</label>
-          <input type="text" id="fName" placeholder="例：小山咖啡">
+          <input type="text" id="fName" placeholder="例：MOMO 購物網">
         </div>
+
         <div class="form-group">
-          <label>類別</label>
-          <input type="text" id="fCategory" placeholder="例：餐飲、服飾、生活">
+          <label>分類</label>
+          <select id="fCategory">
+            <option value="">— 請選擇 —</option>
+            <option>知名品牌</option>
+            <option>居家</option>
+            <option>生活綜合型電商</option>
+            <option>美食佳餚</option>
+            <option>服飾穿搭</option>
+            <option>旅遊住宿票券餐券</option>
+            <option>專業服務</option>
+            <option>寵物</option>
+            <option>藝術與文化</option>
+          </select>
         </div>
-        <div class="form-group full-width">
-          <label>Logo 圖片網址</label>
-          <input type="text" id="fLogoUrl" placeholder="https://...">
-        </div>
-        <div class="form-group">
-          <label>地址</label>
-          <input type="text" id="fAddress" placeholder="台北市...">
-        </div>
-        <div class="form-group">
-          <label>地圖連結</label>
-          <input type="text" id="fMapUrl" placeholder="Google Maps 網址">
-        </div>
-        <div class="form-group">
-          <label>電話</label>
-          <input type="text" id="fPhone" placeholder="02-xxxx-xxxx">
-        </div>
-        <div class="form-group">
-          <label>LINE ID</label>
-          <input type="text" id="fLineId" placeholder="@xxxxxxxx">
-        </div>
-        <div class="form-group full-width">
+
+        <div class="form-group full">
           <label>網站連結</label>
           <input type="text" id="fWebsite" placeholder="https://...">
         </div>
-        <div class="form-group full-width">
-          <label>優惠說明 / 合作內容</label>
-          <textarea id="fPromo" placeholder="例：憑通關密語享 9 折優惠..."></textarea>
+
+        <div class="form-group full">
+          <label>特色簡介</label>
+          <textarea id="fDescription" placeholder="簡短介紹這間商店的特色、優勢..."></textarea>
         </div>
+
+        <div class="form-group">
+          <label>網路或實體</label>
+          <select id="fStoreType">
+            <option value="">— 請選擇 —</option>
+            <option value="網路">🌐 網路商店</option>
+            <option value="實體">🏪 實體商店</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>IBV</label>
+          <input type="text" id="fIbv" placeholder="例：150 IBV">
+        </div>
+
+        <div class="form-group">
+          <label>現金回饋 / IBV</label>
+          <input type="text" id="fCashback" placeholder="例：3% / 50 IBV">
+        </div>
+
+        <div class="form-group">
+          <label>排序（數字越小越前面）</label>
+          <input type="number" id="fSortOrder" placeholder="0" value="0">
+        </div>
+
+        <div class="form-group full">
+          <label>備註</label>
+          <textarea id="fNote" placeholder="其他補充說明、使用限制、有效期限..." style="min-height:60px"></textarea>
+        </div>
+
         <div class="form-group">
           <label>顯示狀態</label>
           <div class="toggle-wrap">
@@ -509,32 +462,29 @@
             <span class="toggle-label" id="fActiveLabel">顯示中</span>
           </div>
         </div>
-        <div class="form-group">
-          <label>排序（數字越小越前面）</label>
-          <input type="number" id="fSortOrder" placeholder="0" value="0">
-        </div>
+
       </div>
       <div class="form-actions">
         <button class="btn btn-ghost" onclick="resetForm()">清除</button>
-        <button class="btn btn-primary" style="width:auto;padding:11px 28px" onclick="savePartner()">💾 儲存</button>
+        <button class="btn btn-primary" style="padding:10px 28px" onclick="savePartner()">💾 儲存</button>
       </div>
     </div>
 
     <!-- 列表 -->
     <div class="section-header">
       <div class="section-title">夥伴商店列表</div>
-      <span style="font-size:0.82rem;color:var(--muted)" id="partnerCountLabel"></span>
+      <span style="font-size:0.8rem;color:var(--muted)" id="countLabel"></span>
     </div>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>Logo</th>
-            <th>名稱</th>
-            <th>類別</th>
-            <th>電話</th>
+            <th>商店名稱</th>
+            <th>分類</th>
+            <th>類型</th>
+            <th>IBV</th>
+            <th>現金回饋/IBV</th>
             <th>狀態</th>
-            <th>排序</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -546,26 +496,18 @@
   </main>
 </div>
 
-<!-- Loading -->
 <div id="loadingOverlay"><div class="spinner"></div></div>
-
-<!-- Toast -->
 <div id="toast"></div>
 
 <script>
-  // ===== 設定區 =====
-  // 請把你的 Google Apps Script 網址貼在這裡
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzPWdr1vPE5PV1ETG6mzlhHgDIB2eqBfUwgpc9KHGRrkdOSjAm7FEloktdbrvRgVbgP/exec';
-
-  // 管理員帳密（上線前請改掉）
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwI-PAtGw5wquZ6NiFZAQOep_MfonrhoMNq5gVKg5XGSX8VEn5oa7CAluq8hNGCIseW/exec';
   const ADMIN_USER = 'superadmin';
   const ADMIN_PASS = 'Aa111111';
 
-  // ===== 狀態 =====
   let partners = [];
   let isActiveState = true;
 
-  // ===== 登入 =====
+  // 登入
   function doLogin() {
     const u = document.getElementById('loginUser').value.trim();
     const p = document.getElementById('loginPass').value;
@@ -584,14 +526,13 @@
     location.reload();
   }
 
-  // 檢查是否已登入
   if (sessionStorage.getItem('admin_auth') === '1') {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('appScreen').style.display = 'block';
     loadPartners();
   }
 
-  // ===== 讀取資料 =====
+  // 讀取
   async function loadPartners() {
     showLoading(true);
     try {
@@ -605,61 +546,54 @@
   }
 
   function renderTable() {
+    document.getElementById('countLabel').textContent = `共 ${partners.length} 間`;
     const tbody = document.getElementById('partnerTable');
-    document.getElementById('partnerCountLabel').textContent = `共 ${partners.length} 間`;
 
-    if (partners.length === 0) {
+    if (!partners.length) {
       tbody.innerHTML = '<tr class="empty-row"><td colspan="7">還沒有夥伴商店，從上方新增吧！</td></tr>';
       return;
     }
 
-    tbody.innerHTML = partners.map(p => `
+    tbody.innerHTML = partners.map(p => {
+      const active = p.is_active === 'TRUE' || p.is_active === true;
+      const isOnline = p.store_type === '網路';
+      return `
       <tr>
-        <td>
-          <div class="partner-logo-cell">
-            ${p.logo_url ? `<img src="${p.logo_url}" alt="" onerror="this.parentElement.textContent='🏪'">` : '🏪'}
-          </div>
-        </td>
-        <td><strong>${p.name}</strong></td>
+        <td><strong>${p.name}</strong>${p.website_url ? `<br><a href="${p.website_url}" target="_blank" style="font-size:0.72rem;color:#7a7570;word-break:break-all">${p.website_url.replace(/^https?:\/\//,'')}</a>` : ''}</td>
         <td>${p.category || '—'}</td>
-        <td>${p.phone || '—'}</td>
-        <td><span class="badge ${p.is_active === 'TRUE' || p.is_active === true ? 'badge-active' : 'badge-inactive'}">
-          ${p.is_active === 'TRUE' || p.is_active === true ? '顯示中' : '隱藏'}
-        </span></td>
-        <td>${p.sort_order ?? '—'}</td>
+        <td>${p.store_type ? `<span class="badge ${isOnline?'badge-online':'badge-physical'}">${isOnline?'🌐 網路':'🏪 實體'}</span>` : '—'}</td>
+        <td>${p.ibv || '—'}</td>
+        <td>${p.cashback || '—'}</td>
+        <td><span class="badge ${active?'badge-active':'badge-inactive'}">${active?'顯示':'隱藏'}</span></td>
         <td>
           <div class="actions-cell">
-            <button class="btn btn-ghost btn-sm" onclick="editPartner('${p.id}')">✏️ 編輯</button>
-            <button class="btn btn-danger btn-sm" onclick="deletePartner('${p.id}', '${p.name}')">🗑</button>
+            <button class="btn btn-ghost btn-sm" onclick="editPartner('${p.id}')">✏️</button>
+            <button class="btn btn-danger btn-sm" onclick="deletePartner('${p.id}','${p.name.replace(/'/g,"\\'")}')">🗑</button>
           </div>
         </td>
-      </tr>
-    `).join('');
+      </tr>`;
+    }).join('');
   }
 
-  // ===== Toggle =====
   function toggleActive() {
     isActiveState = !isActiveState;
-    const btn = document.getElementById('fActiveToggle');
-    const label = document.getElementById('fActiveLabel');
-    btn.classList.toggle('on', isActiveState);
-    label.textContent = isActiveState ? '顯示中' : '隱藏';
+    document.getElementById('fActiveToggle').classList.toggle('on', isActiveState);
+    document.getElementById('fActiveLabel').textContent = isActiveState ? '顯示中' : '隱藏';
   }
 
-  // ===== 重置表單 =====
   function resetForm() {
     document.getElementById('editId').value = '';
     document.getElementById('formTitle').textContent = '➕ 新增夥伴商店';
-    ['fName','fCategory','fLogoUrl','fAddress','fMapUrl','fPhone','fLineId','fWebsite','fPromo'].forEach(id => {
-      document.getElementById(id).value = '';
-    });
+    ['fName','fWebsite','fDescription','fIbv','fCashback','fNote'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fCategory').value = '';
+    document.getElementById('fStoreType').value = '';
     document.getElementById('fSortOrder').value = '0';
     isActiveState = true;
     document.getElementById('fActiveToggle').classList.add('on');
     document.getElementById('fActiveLabel').textContent = '顯示中';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ===== 編輯 =====
   function editPartner(id) {
     const p = partners.find(x => x.id === id);
     if (!p) return;
@@ -667,13 +601,12 @@
     document.getElementById('formTitle').textContent = '✏️ 編輯：' + p.name;
     document.getElementById('fName').value = p.name || '';
     document.getElementById('fCategory').value = p.category || '';
-    document.getElementById('fLogoUrl').value = p.logo_url || '';
-    document.getElementById('fAddress').value = p.address || '';
-    document.getElementById('fMapUrl').value = p.map_url || '';
-    document.getElementById('fPhone').value = p.phone || '';
-    document.getElementById('fLineId').value = p.line_id || '';
     document.getElementById('fWebsite').value = p.website_url || '';
-    document.getElementById('fPromo').value = p.promo_title || '';
+    document.getElementById('fDescription').value = p.description || '';
+    document.getElementById('fStoreType').value = p.store_type || '';
+    document.getElementById('fIbv').value = p.ibv || '';
+    document.getElementById('fCashback').value = p.cashback || '';
+    document.getElementById('fNote').value = p.note || '';
     document.getElementById('fSortOrder').value = p.sort_order || 0;
     isActiveState = p.is_active === 'TRUE' || p.is_active === true;
     document.getElementById('fActiveToggle').classList.toggle('on', isActiveState);
@@ -681,57 +614,48 @@
     document.querySelector('.form-panel').scrollIntoView({ behavior: 'smooth' });
   }
 
-  // ===== 儲存 =====
   async function savePartner() {
     const name = document.getElementById('fName').value.trim();
     if (!name) { toast('請填寫商店名稱', 'error'); return; }
 
     const id = document.getElementById('editId').value;
-    const data = {
+    const payload = {
       action: id ? 'update' : 'create',
       id,
       name,
-      category: document.getElementById('fCategory').value.trim(),
-      logo_url: document.getElementById('fLogoUrl').value.trim(),
-      address: document.getElementById('fAddress').value.trim(),
-      map_url: document.getElementById('fMapUrl').value.trim(),
-      phone: document.getElementById('fPhone').value.trim(),
-      line_id: document.getElementById('fLineId').value.trim(),
+      category: document.getElementById('fCategory').value,
       website_url: document.getElementById('fWebsite').value.trim(),
-      promo_title: document.getElementById('fPromo').value.trim(),
+      description: document.getElementById('fDescription').value.trim(),
+      store_type: document.getElementById('fStoreType').value,
+      ibv: document.getElementById('fIbv').value.trim(),
+      cashback: document.getElementById('fCashback').value.trim(),
+      note: document.getElementById('fNote').value.trim(),
       sort_order: document.getElementById('fSortOrder').value || 0,
       is_active: isActiveState,
     };
 
     showLoading(true);
     try {
-      const res = await fetch(SCRIPT_URL, {
-        method: 'POST',
-        body: JSON.stringify(data)
-      });
+      const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
       const result = await res.json();
       if (result.success) {
-        toast(id ? '更新成功！' : '新增成功！', 'success');
+        toast(id ? '✓ 更新成功！' : '✓ 新增成功！', 'success');
         resetForm();
         await loadPartners();
       } else {
         toast('儲存失敗：' + result.error, 'error');
       }
     } catch (e) {
-      toast('儲存失敗，請確認網路或 Script 設定', 'error');
+      toast('儲存失敗，請確認 Script 設定', 'error');
     }
     showLoading(false);
   }
 
-  // ===== 刪除 =====
   async function deletePartner(id, name) {
-    if (!confirm(`確定要刪除「${name}」嗎？此操作無法復原。`)) return;
+    if (!confirm(`確定要刪除「${name}」？`)) return;
     showLoading(true);
     try {
-      const res = await fetch(SCRIPT_URL, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'delete', id })
-      });
+      const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'delete', id }) });
       const result = await res.json();
       if (result.success) {
         toast(`已刪除「${name}」`, 'success');
@@ -745,16 +669,15 @@
     showLoading(false);
   }
 
-  // ===== UI helpers =====
   function showLoading(show) {
     document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
   }
 
   function toast(msg, type = 'success') {
     const el = document.getElementById('toast');
-    el.textContent = (type === 'success' ? '✓ ' : '✕ ') + msg;
+    el.textContent = msg;
     el.className = `show ${type}`;
-    setTimeout(() => { el.className = ''; }, 3000);
+    setTimeout(() => el.className = '', 3000);
   }
 </script>
 </body>
