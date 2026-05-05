@@ -209,9 +209,42 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* Card image */
+  .card-img {
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    background: #f0ebe2;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .card:hover .card-img img {
+    transform: scale(1.04);
+  }
+
+  .card-img .img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f0ebe2 0%, #e8e0d4 100%);
+    font-size: 2.8rem;
+    opacity: 0.5;
+  }
+
   /* Card header */
   .card-header {
-    padding: 18px 20px 14px;
+    padding: 16px 20px 12px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -432,7 +465,7 @@
 <footer>© 精選夥伴商店 · 用心推薦，每間都值得</footer>
 
 <script>
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwI-PAtGw5wquZ6NiFZAQOep_MfonrhoMNq5gVKg5XGSX8VEn5oa7CAluq8hNGCIseW/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIdGmI2SauhBY_Uk5eGr2CoM0GnbU4cj0xTpIaFKpnDUrElpmaC9aZ65dmGBCP1tTs/exec';
 
   const CATEGORIES = [
     '知名品牌','居家','生活綜合型電商','美食佳餚',
@@ -503,8 +536,13 @@
       const cashBox = p.cashback
         ? `<div class="reward-box"><div class="reward-label">現金回饋 / IBV</div><div class="reward-value accent">${p.cashback}</div></div>` : '';
 
+      const imgSection = p.image_url
+        ? `<div class="card-img"><img src="${p.image_url}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=img-placeholder>🏪</div>'"></div>`
+        : `<div class="card-img"><div class="img-placeholder">🏪</div></div>`;
+
       return `
       <div class="card" style="animation-delay:${i*0.05}s">
+        ${imgSection}
         <div class="card-header">
           <div class="card-name-wrap">
             <div class="card-name">${p.name}</div>

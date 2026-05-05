@@ -347,6 +347,42 @@
 
   .empty-row td { text-align: center; padding: 44px; color: var(--muted); font-style: italic; }
 
+  /* Image preview */
+  .img-preview-wrap { display: flex; gap: 12px; align-items: flex-start; }
+  .img-preview-wrap input { flex: 1; }
+
+  .img-preview-box {
+    width: 80px; height: 60px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--surface2);
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 1.4rem;
+    transition: border-color 0.2s;
+  }
+
+  .img-preview-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .img-preview-box.loaded { border-color: var(--sage); }
+
+  .logo-cell {
+    width: 40px; height: 40px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .logo-cell img { width: 100%; height: 100%; object-fit: cover; }
+
   @media (max-width: 768px) {
     .app-main { padding: 16px; }
     .form-grid { grid-template-columns: 1fr; }
@@ -422,6 +458,14 @@
         </div>
 
         <div class="form-group full">
+          <label>商店圖片網址</label>
+          <div class="img-preview-wrap">
+            <input type="text" id="fImageUrl" placeholder="https://... (貼上圖片直連網址)" oninput="previewImage(this.value)">
+            <div class="img-preview-box" id="imgPreviewBox">🖼</div>
+          </div>
+        </div>
+
+        <div class="form-group full">
           <label>特色簡介</label>
           <textarea id="fDescription" placeholder="簡短介紹這間商店的特色、優勢..."></textarea>
         </div>
@@ -479,6 +523,7 @@
       <table>
         <thead>
           <tr>
+            <th>圖片</th>
             <th>商店名稱</th>
             <th>分類</th>
             <th>類型</th>
@@ -489,7 +534,7 @@
           </tr>
         </thead>
         <tbody id="partnerTable">
-          <tr class="empty-row"><td colspan="7">載入中...</td></tr>
+          <tr class="empty-row"><td colspan="8">載入中...</td></tr>
         </tbody>
       </table>
     </div>
@@ -500,12 +545,34 @@
 <div id="toast"></div>
 
 <script>
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwI-PAtGw5wquZ6NiFZAQOep_MfonrhoMNq5gVKg5XGSX8VEn5oa7CAluq8hNGCIseW/exec';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIdGmI2SauhBY_Uk5eGr2CoM0GnbU4cj0xTpIaFKpnDUrElpmaC9aZ65dmGBCP1tTs/exec';
   const ADMIN_USER = 'superadmin';
   const ADMIN_PASS = 'Aa111111';
 
   let partners = [];
   let isActiveState = true;
+
+  // 圖片預覽
+  function previewImage(url) {
+    const box = document.getElementById('imgPreviewBox');
+    if (!url || !url.trim()) {
+      box.innerHTML = '🖼';
+      box.classList.remove('loaded');
+      return;
+    }
+    const img = new Image();
+    img.onload = () => {
+      box.innerHTML = '';
+      box.appendChild(img);
+      box.classList.add('loaded');
+    };
+    img.onerror = () => {
+      box.innerHTML = '❌';
+      box.classList.remove('loaded');
+    };
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+    img.src = url.trim();
+  }
 
   // 登入
   function doLogin() {
@@ -550,16 +617,20 @@
     const tbody = document.getElementById('partnerTable');
 
     if (!partners.length) {
-      tbody.innerHTML = '<tr class="empty-row"><td colspan="7">還沒有夥伴商店，從上方新增吧！</td></tr>';
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="8">還沒有夥伴商店，從上方新增吧！</td></tr>';
       return;
     }
 
     tbody.innerHTML = partners.map(p => {
       const active = p.is_active === 'TRUE' || p.is_active === true;
       const isOnline = p.store_type === '網路';
+      const logoCell = p.image_url
+        ? `<div class="logo-cell"><img src="${p.image_url}" alt="" onerror="this.parentElement.innerHTML='🏪'"></div>`
+        : `<div class="logo-cell">🏪</div>`;
       return `
       <tr>
-        <td><strong>${p.name}</strong>${p.website_url ? `<br><a href="${p.website_url}" target="_blank" style="font-size:0.72rem;color:#7a7570;word-break:break-all">${p.website_url.replace(/^https?:\/\//,'')}</a>` : ''}</td>
+        <td>${logoCell}</td>
+        <td><strong>${p.name}</strong>${p.website_url ? `<br><a href="${p.website_url}" target="_blank" style="font-size:0.72rem;color:#7a7570;word-break:break-all">${p.website_url.replace(/^https?:\/\//, '')}</a>` : ''}</td>
         <td>${p.category || '—'}</td>
         <td>${p.store_type ? `<span class="badge ${isOnline?'badge-online':'badge-physical'}">${isOnline?'🌐 網路':'🏪 實體'}</span>` : '—'}</td>
         <td>${p.ibv || '—'}</td>
@@ -584,7 +655,9 @@
   function resetForm() {
     document.getElementById('editId').value = '';
     document.getElementById('formTitle').textContent = '➕ 新增夥伴商店';
-    ['fName','fWebsite','fDescription','fIbv','fCashback','fNote'].forEach(id => document.getElementById(id).value = '');
+    ['fName','fWebsite','fImageUrl','fDescription','fIbv','fCashback','fNote'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('imgPreviewBox').innerHTML = '🖼';
+    document.getElementById('imgPreviewBox').classList.remove('loaded');
     document.getElementById('fCategory').value = '';
     document.getElementById('fStoreType').value = '';
     document.getElementById('fSortOrder').value = '0';
@@ -602,6 +675,8 @@
     document.getElementById('fName').value = p.name || '';
     document.getElementById('fCategory').value = p.category || '';
     document.getElementById('fWebsite').value = p.website_url || '';
+    document.getElementById('fImageUrl').value = p.image_url || '';
+    previewImage(p.image_url || '');
     document.getElementById('fDescription').value = p.description || '';
     document.getElementById('fStoreType').value = p.store_type || '';
     document.getElementById('fIbv').value = p.ibv || '';
@@ -625,6 +700,7 @@
       name,
       category: document.getElementById('fCategory').value,
       website_url: document.getElementById('fWebsite').value.trim(),
+      image_url: document.getElementById('fImageUrl').value.trim(),
       description: document.getElementById('fDescription').value.trim(),
       store_type: document.getElementById('fStoreType').value,
       ibv: document.getElementById('fIbv').value.trim(),
