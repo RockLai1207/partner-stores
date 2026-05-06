@@ -437,21 +437,11 @@ a { color: inherit; text-decoration: none; }
 </footer>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIdGmI2SauhBY_Uk5eGr2CoM0GnbU4cj0xTpIaFKpnDUrElpmaC9aZ65dmGBCP1tTs/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxj12fGdRDxOBiVyEZTpbgeM9pPKfbZkBH99kHL6M3Ka06lj4eVGR9FxsUtpqT7mDJ1/exec';
 
-const CATEGORIES = ['知名品牌','居家','生活綜合型電商','美食佳餚','服飾穿搭','旅遊住宿票券餐券','專業服務','寵物','藝術與文化'];
-
-const CATEGORY_TONE = {
-  '知名品牌':       '#B8704B',
-  '居家':           '#7A9B6E',
-  '生活綜合型電商':  '#5E8A9C',
-  '美食佳餚':       '#C4834A',
-  '服飾穿搭':       '#9B7EB8',
-  '旅遊住宿票券餐券':'#5B8C8A',
-  '專業服務':       '#8A7B6E',
-  '寵物':           '#C47A5A',
-  '藝術與文化':     '#8B6FA0',
-};
+// Populated dynamically from API
+let CATEGORIES  = [];
+let CATEGORY_TONE = {};
 
 const CAT_ICONS = {
   '知名品牌':       '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>',
@@ -474,8 +464,17 @@ let openStore   = null;
 // ── FETCH ────────────────────────────────────────────────
 async function fetchPartners() {
   try {
-    const res  = await fetch(`${SCRIPT_URL}?action=list`);
-    const data = await res.json();
+    const [pRes, cRes] = await Promise.all([
+      fetch(`${SCRIPT_URL}?action=list`),
+      fetch(`${SCRIPT_URL}?action=listCategories`),
+    ]);
+    const cats = await cRes.json();
+    // Build dynamic lookup tables
+    CATEGORIES = cats.map(c => c.name);
+    CATEGORY_TONE = {};
+    cats.forEach(c => { CATEGORY_TONE[c.name] = c.tone || '#B8704B'; });
+
+    const data = await pRes.json();
     allPartners = data.filter(p => p.is_active !== false && p.is_active !== 'FALSE');
     renderCategories();
     renderGrid();
